@@ -19,9 +19,9 @@ from PIL import Image
 
 # Create text for the label
 
-text1 = Text(45, "First line", 'comic.ttf', padding=Padding(0, 0, 1, 0))
-text2 = Text(25, "Some text", 'comic.ttf')
-text3 = Text(25, "Other text", 'comic.ttf')
+text1 = Text(45, "First line", "comic.ttf", padding=Padding(0, 0, 1, 0))
+text2 = Text(25, "Some text", "comic.ttf")
+text3 = Text(25, "Other text", "comic.ttf")
 
 # Insert Text into boxes
 box1 = Box(45, text1)
@@ -53,7 +53,7 @@ To use a Bluetooth connection:
 2. specify the serial device node when instantiating the printer:
 
 ```python
-printer = GenericPrinter(BTSerialBackend(dev_path='/dev/ttyS8'))
+printer = GenericPrinter(BTSerialBackend(dev_path="/dev/ttyS8"))
 ```
 
 The following printers are currently supported:

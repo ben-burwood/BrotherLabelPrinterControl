@@ -1,40 +1,35 @@
-[tool.poetry]
+[project]
 name = "brother_label_printer_control"
-version = "0.8.0"
+version = "1.0.0"
 description = "A library for creating and printing labels for Brother P-Touch devices"
 authors = [
-    "Adrian Tschira <packages@notafile.com>",
-    "Benedikt Neuffer <benedikt.neuffer@kit.edu>",
-    "Ben Burwood <ben.burwood@outlook.com>"
+    { name = "Adrian Tschira", email = "packages@notafile.com" },
+    { name = "Benedikt Neuffer", email = "benedikt.neuffer@kit.edu" },
+    { name = "Ben Burwood", email = "ben.burwood@outlook.com" },
 ]
-license = "Apache License, Version 2.0"
+license = "Apache-2.0"
 readme = "README.md"
+dependencies = [
+    "packbits>=0.6",
+    "pillow>=12.3.0",
+    "pyusb>=1.3.1",
+]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-pillow = "^9.5.0"
-pyusb = "^1.2.1"
-packbits = "^0.6"
-pyserial = {version = "^3.5", optional = true}
-qrcode = {version = "^7.4.2", optional = true, extras = ["pil"]}
-setuptools = "^68.0.0"
-pysnmp = {version = "^4.4.12", optional = true}
-#pin pyasn because pysnmp does not work with newer versions
-pyasn1 = {version = "^0.4.8", optional = true}
-
-[tool.poetry.extras]
-bluetooth = ["pyserial"]
-qrcode = ["qrcode"]
-snmp = ["pysnmp", "pyasn1"]
-
-[tool.poetry.group.dev.dependencies]
-mypy = "^1.5.1"
-types-setuptools = "^68.1.0.0"
-types-pillow = "^10.0.0.2"
+[dependency-groups]
+bluetooth = [
+    "pyserial>=3.5",
+]
+qrcode = [
+    "qrcode>=8.2",
+]
+snmp = [
+    "pyasn1>=0.6.4",
+    "pysnmp>=7.1.29",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.12.7,<0.13"]
+build-backend = "uv_build"
 
 [tool.ruff]
 line-length = 150
