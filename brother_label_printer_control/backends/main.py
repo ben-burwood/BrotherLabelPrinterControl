@@ -1,5 +1,4 @@
 from enum import Enum, auto
-from typing import Type
 
 from . import BaseBackend
 from .bluetooth import BTSerialBackend
@@ -13,7 +12,7 @@ class Backend(Enum):
     BLUETOOTH = auto()
 
     @property
-    def backend(self) -> Type[BaseBackend]:
+    def backend(self) -> type[BaseBackend]:
         match self:
             case Backend.USB:
                 return PyUSBBackend

@@ -1,9 +1,9 @@
 from logging import getLogger
 
-from . import ItemType
 from ..constants import Resolution
 from ..page import BasePage
 from ..utils.image import image_to_bitmap
+from . import ItemType
 
 logger = getLogger(__name__)
 

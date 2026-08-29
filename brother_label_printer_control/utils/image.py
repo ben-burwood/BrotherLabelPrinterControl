@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-from typing import Tuple
-
 from PIL import Image, ImageChops
 
-def image_to_bitmap(image: Image) -> Tuple[bytes, int, int]:
+
+def image_to_bitmap(image: Image) -> tuple[bytes, int, int]:
     assert image.mode == "1"
     image = image.transpose(Image.ROTATE_270).transpose(Image.FLIP_TOP_BOTTOM)
     image = ImageChops.invert(image)

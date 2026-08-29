@@ -22,11 +22,10 @@ class PyUSBBackend(BaseBackend):
         self._dev = self.get_device(self.vendor_id, self.product_id)
 
     @staticmethod
-    def get_device(
-        vendor_id: int | None = None, product_id: int | None = None
-    ) -> usb.core.Device:
+    def get_device(vendor_id: int | None = None, product_id: int | None = None) -> usb.core.Device:
         """Get the PyUSB Device for a USB Printer"""
         if vendor_id and product_id:
+
             def match_func(dev) -> bool:
                 return PyUSBBackend.has_vendor_product_id(dev, vendor_id, product_id)
         else:
@@ -87,7 +86,7 @@ class PyUSBBackend(BaseBackend):
         self._dev.write(endpoint=0x2, data=data, timeout=timeout)
 
     def read(self, count: int) -> bytes | None:
-        for i in range(0, 3):
+        for i in range(3):
             data = self._dev.read(endpoint=0x81, size_or_buffer=count)
             if data:
                 return data
@@ -100,11 +99,7 @@ def handle_error(e: Exception) -> None:
     if isinstance(e, usb.core.USBError):
         match e.errno:
             case 16:
-                raise BrotherPrinterError(
-                    "USB Device is Busy - Detach from Kernel"
-                ) from e
+                raise BrotherPrinterError("USB Device is Busy - Detach from Kernel") from e
             case 19:
-                raise BrotherPrinterError(
-                    "USB Device is Disconnected - Turn the Device On"
-                ) from e
+                raise BrotherPrinterError("USB Device is Disconnected - Turn the Device On") from e
     raise e

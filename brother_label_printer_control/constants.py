@@ -3,6 +3,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import NamedTuple
 
+
 class Resolution(Enum):
     LOW = (180, 180)
     HIGH = (180, 320)
@@ -67,7 +68,7 @@ class Media(Enum):
         return medias[0]
 
     @staticmethod
-    def get(name: str) -> "Media":
+    def get(name: str) -> Media:
         for media_type in Media:
             if media_type.name.lower() == name.lower():
                 return media_type

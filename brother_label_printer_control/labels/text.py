@@ -6,8 +6,8 @@ from typing import NamedTuple
 
 from PIL import Image, ImageDraw, ImageFont
 
-from . import Item
 from ..utils.image import crop
+from . import Item
 
 logger = getLogger(__name__)
 
@@ -24,7 +24,9 @@ class Padding(NamedTuple):
 
 
 class Text(Item):
-    def __init__(self, height: int, text: str, font_path: str, font_index: int = 0, font_size: int | None = None, padding: Padding = Padding(0, 0, 0, 0)) -> None:
+    def __init__(
+        self, height: int, text: str, font_path: str, font_index: int = 0, font_size: int | None = None, padding: Padding = Padding(0, 0, 0, 0)
+    ) -> None:
         self.text = text
         self.height = height
         self.font_path = font_path

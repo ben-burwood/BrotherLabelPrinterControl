@@ -13,4 +13,4 @@ class Error:
         return self._errors[attr]
 
     def __repr__(self):
-        return "<Errors {}>".format(self._errors)
+        return f"<Errors {self._errors}>"

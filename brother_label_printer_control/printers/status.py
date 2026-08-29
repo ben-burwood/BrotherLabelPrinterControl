@@ -1,5 +1,5 @@
-from .error import Error
 from ..constants import Media, MediaType, NotificationCodes, StatusCodes, TapeColor, TextColor
+from .error import Error
 
 
 class Status:
@@ -52,7 +52,7 @@ class Status:
         self._media = None
 
     def __repr__(self) -> str:
-        return "<Status {}>".format(self._data)
+        return f"<Status {self._data}>"
 
     def __getattr__(self, attr):
         return self._data[attr]

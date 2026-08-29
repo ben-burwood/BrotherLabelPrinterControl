@@ -1,9 +1,9 @@
 from __future__ import annotations
+
 import socket
 
 try:
-    from pysnmp.hlapi import SnmpEngine, getCmd, UdpTransportTarget, Udp6TransportTarget,\
-        ContextData, ObjectType, ObjectIdentity, CommunityData
+    from pysnmp.hlapi import CommunityData, ContextData, ObjectIdentity, ObjectType, SnmpEngine, Udp6TransportTarget, UdpTransportTarget, getCmd
 except ImportError:
     SnmpEngine = None
     getCmd = None
@@ -37,13 +37,13 @@ class TCPBackend(UniDirectionalBackend):
     def write(self, data: bytes) -> None:
         sent = self._sock.send(data)
         if sent == 0:
-            raise IOError("Socket connection broken")
+            raise OSError("Socket connection broken")
 
 
 class NetworkBackend(TCPBackend):
-    def __init__(self, host, port=9100, timeout=10, snmp_community='public', snmp_port=161):
+    def __init__(self, host, port=9100, timeout=10, snmp_community="public", snmp_port=161):
         if getCmd is None:
-            raise RuntimeError('Bidirectional network communication is not supported. Pacakge pysnmp is missing.')
+            raise RuntimeError("Bidirectional network communication is not supported. Pacakge pysnmp is missing.")
         self._snmp_community = snmp_community
         self._snmp_port = snmp_port
         super().__init__(host, port, timeout)
@@ -57,12 +57,8 @@ class NetworkBackend(TCPBackend):
             transport = UdpTransportTarget((remote_address, 161), timeout=self._timeout)
 
         iterator = getCmd(
-            SnmpEngine(),
-            CommunityData('public'),
-            transport,
-            ContextData(),
-            ObjectType(ObjectIdentity('.1.3.6.1.4.1.2435.3.3.9.1.6.1.0'))
-            )
+            SnmpEngine(), CommunityData("public"), transport, ContextData(), ObjectType(ObjectIdentity(".1.3.6.1.4.1.2435.3.3.9.1.6.1.0"))
+        )
 
         error_indication, _, _, variables = next(iterator)
         if error_indication:

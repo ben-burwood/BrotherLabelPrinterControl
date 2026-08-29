@@ -6,10 +6,10 @@ from typing import TypeVar
 
 import packbits
 
-from .status import Status
 from ..backends import BaseBackend, UniDirectionalBackend
 from ..constants import AdvancedModeSettings, Media, Resolution, VariousModesSettings
 from ..job import Job
+from .status import Status
 
 logger = getLogger(__name__)
 
@@ -67,13 +67,13 @@ class GenericPrinter(BasePrinter):
             raise RuntimeError("Backend is unidirectional")
         else:
             self.reset()
-            self._backend.write(b"\x1BiS")
+            self._backend.write(b"\x1biS")
             data = self._backend.read(32)
         if not data:
-            raise IOError("No Response from printer")
+            raise OSError("No Response from printer")
 
         if len(data) < 32:
-            raise IOError("Invalid Response from printer")
+            raise OSError("Invalid Response from printer")
 
         return Status(data)
 
@@ -112,21 +112,21 @@ class GenericPrinter(BasePrinter):
         if job.special_tape:
             advanced_mode = advanced_mode | AdvancedModeSettings.SPECIAL_TAPE.value
         if job.resolution == Resolution.HIGH:
-            margin = b"\x1C\x00"
+            margin = b"\x1c\x00"
             advanced_mode = advanced_mode | AdvancedModeSettings.HIGH_RESOLUTION.value
         else:
-            margin = b"\x0E\x00"
+            margin = b"\x0e\x00"
         advanced_mode = advanced_mode.to_bytes(1, "big")
 
         cut_each = job.cut_each.to_bytes(1, "big")
 
         for i, page in enumerate(job):
             # switch dynamic command mode: enable raster mode
-            self._backend.write(b"\x1Bia\x01")
+            self._backend.write(b"\x1bia\x01")
 
             # Print information command
             # b'\x1Biz\x86\x01\x0c\x00\x00\x00\00\x00\x00'
-            information_command = b"\x1Biz\x86" + media_type + media_size + b"\x00\x00\x00\00\x00\x00"
+            information_command = b"\x1biz\x86" + media_type + media_size + b"\x00\x00\x00\00\x00\x00"
             self._backend.write(information_command)
             if i == 0 and auto_cut:
                 # Ugly workaround
@@ -136,7 +136,7 @@ class GenericPrinter(BasePrinter):
 
             # Various mode
             logger.debug(f"various_mode: {various_mode}")
-            self._backend.write(b"\x1BiM" + various_mode)
+            self._backend.write(b"\x1biM" + various_mode)
 
             # Advanced mode
             logger.debug(f"advanced_mode: {advanced_mode}")
@@ -147,7 +147,7 @@ class GenericPrinter(BasePrinter):
 
             if auto_cut:
                 # Configure after how many pages a cut should be done
-                self._backend.write(b"\x1BiA" + cut_each)
+                self._backend.write(b"\x1biA" + cut_each)
 
             # Enable compression mode
             self._backend.write(b"M\x02")
@@ -161,8 +161,8 @@ class GenericPrinter(BasePrinter):
 
             logging.debug(f"i: {i}")
             if i < len(job) - 1:
-                self._backend.write(b"\x0C")
+                self._backend.write(b"\x0c")
 
         # end page
-        self._backend.write(b"\x1A")
+        self._backend.write(b"\x1a")
         logger.info("end of page")

@@ -5,6 +5,7 @@ from typing import TypeVar
 
 from PIL import Image
 
+
 class Item(ABC):
     @abstractmethod
     def render(self) -> Image: ...

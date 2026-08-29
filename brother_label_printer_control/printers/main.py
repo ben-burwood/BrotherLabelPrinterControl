@@ -1,8 +1,8 @@
 from enum import Enum, auto
-from typing import Type
 
-from . import GenericPrinter
 from ..constants import Resolution
+from . import GenericPrinter
+
 
 class P700(GenericPrinter):
     pass
@@ -33,7 +33,7 @@ class Printer(Enum):
     PTP_E550W = auto()
 
     @property
-    def printer(self) -> Type[GenericPrinter]:
+    def printer(self) -> type[GenericPrinter]:
         match self:
             case Printer.PTP_700:
                 return P700

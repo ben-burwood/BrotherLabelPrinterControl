@@ -2,10 +2,10 @@ from logging import getLogger
 
 from PIL.Image import Image
 
-from .label import ItemType
 from ..constants import Resolution
 from ..page import BasePage
 from ..utils.image import bitmap_to_image, image_to_bitmap
+from .label import ItemType
 
 logger = getLogger(__name__)
 

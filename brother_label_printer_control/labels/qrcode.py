@@ -1,14 +1,12 @@
 from __future__ import annotations
 
-from typing import Optional
-
 from PIL import Image
 
 from . import Item
 
 try:
     from qrcode import QRCode as _QRCode
-    from qrcode.constants import ERROR_CORRECT_L, ERROR_CORRECT_M, ERROR_CORRECT_H, ERROR_CORRECT_Q
+    from qrcode.constants import ERROR_CORRECT_H, ERROR_CORRECT_L, ERROR_CORRECT_M, ERROR_CORRECT_Q
 except ImportError:
     _QRCode = None
     ERROR_CORRECT_L = 1
@@ -18,7 +16,14 @@ except ImportError:
 
 
 class QRCode(Item):
-    def __init__(self, width: int, data: str, error_correction: Optional[ERROR_CORRECT_M | ERROR_CORRECT_H | ERROR_CORRECT_Q] = None, box_size: int | None = None, border: int = 0) -> None:
+    def __init__(
+        self,
+        width: int,
+        data: str,
+        error_correction: ERROR_CORRECT_M | ERROR_CORRECT_H | ERROR_CORRECT_Q | None = None,
+        box_size: int | None = None,
+        border: int = 0,
+    ) -> None:
         if _QRCode is None:
             raise RuntimeError("No QR code support. Package qrcode is not installed.")
         self._width = width

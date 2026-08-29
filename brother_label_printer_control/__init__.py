@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__all__ = ["printers", "backends", "label", "job", "page"]
+__all__ = ["backends", "job", "label", "page", "printers"]
 
 from pkg_resources import DistributionNotFound, get_distribution
 

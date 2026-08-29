@@ -11,15 +11,14 @@
 
 # First let's import all the needed Classes
 
-from labelprinterkit.label import Label, Padding
-
-from labelprinterkit.backends.network import TCPBackend
-from labelprinterkit.constants import Media
-from labelprinterkit.job import Job
-from labelprinterkit.labels.box import Box
-from labelprinterkit.labels.qrcode import QRCode
-from labelprinterkit.labels.text import Text
-from labelprinterkit.printers.main import P750W
+from brother_label_printer_control.backends.network import TCPBackend
+from brother_label_printer_control.constants import Media
+from brother_label_printer_control.job import Job
+from brother_label_printer_control.labels.box import Box
+from brother_label_printer_control.labels.label import Label
+from brother_label_printer_control.labels.qrcode import QRCode
+from brother_label_printer_control.labels.text import Padding, Text
+from brother_label_printer_control.printers.main import P750W
 
 # The label will be created for a 12mm band. The 12mm has 70 pixel/points width.
 # So let's create a QR code with 70 pixels width.

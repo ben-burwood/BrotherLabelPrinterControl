@@ -25,7 +25,7 @@ class Job:
         self.chain = chain
         self.special_tape = special_tape
         if not 1 <= cut_each <= 99:
-            ValueError(f"cut_skip has to be between 1 and 99")
+            ValueError("cut_skip has to be between 1 and 99")
         self.cut_each = cut_each
         self.resolution = resolution
 
