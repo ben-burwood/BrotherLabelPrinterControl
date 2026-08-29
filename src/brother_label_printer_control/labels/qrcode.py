@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+from logging import getLogger
+
 from PIL import Image
 
 from . import Item
+
+logger = getLogger(__name__)
 
 try:
     from qrcode import QRCode as _QRCode
