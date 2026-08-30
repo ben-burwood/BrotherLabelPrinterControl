@@ -45,9 +45,9 @@ class Text(Item):
         else:
             font_size = self.font_size
         font = ImageFont.truetype(self.font_path, font_size, self.font_index)
-        text_x, _ = font.getsize(self.text)
+        text_x, _ = font.getbbox(self.text)[2:]
         image = Image.new("1", (self.padding.left + text_x + self.padding.right, self.height), "white")
-        fimage = Image.new("1", font.getsize(self.text), "white")
+        fimage = Image.new("1", font.getbbox(self.text)[2:], "white")
         draw = ImageDraw.Draw(fimage)
         draw.text((0, 0), self.text, "black", font)
         fimage = crop(fimage)
@@ -59,7 +59,7 @@ class Text(Item):
         upper = 1
         while True:
             font = ImageFont.truetype(self.font_path, upper)
-            image = Image.new("1", font.getsize(self.text), "white")
+            image = Image.new("1", font.getbbox(self.text)[2:], "white")
             draw = ImageDraw.Draw(image)
             draw.text((0, 0), self.text, "black", font)
             font_height = crop(image).size[1]
@@ -70,7 +70,7 @@ class Text(Item):
         while True:
             test = ceil((upper + lower) / 2)
             font = ImageFont.truetype(self.font_path, test)
-            image = Image.new("1", font.getsize(self.text), "white")
+            image = Image.new("1", font.getbbox(self.text)[2:], "white")
             draw = ImageDraw.Draw(image)
             draw.text((0, 0), self.text, "black", font)
             font_height = crop(image).size[1]
